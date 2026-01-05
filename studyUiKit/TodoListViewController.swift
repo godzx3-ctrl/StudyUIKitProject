@@ -7,10 +7,94 @@
 
 import UIKit
 
-class TodoListViewController : UIViewController
+class TodoListViewController : UIViewController, UITableViewDataSource, UITableViewDelegate
 {
+    
+    
+    let todos = ["운동하기", "책 읽기", "영화보기", "빨래하기"]
+    
+    let lineUIView:UIView = {
+        let view = UIView()
+        view.backgroundColor = .separator
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    let titleLabel:UILabel = {
+        let label = UILabel()
+        label.text = "할 일 목 록"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        label.textAlignment = .center
+        return label
+    }()
+    
+    let addTodoButton:UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("할 일 추가", for: .normal)
+        button.backgroundColor = .systemBlue
+        button.titleLabel?.textColor = .white
+        button.clipsToBounds = true
+        button.layer.cornerRadius = 20
+        return button
+    }()
+    
+    lazy var todoTableView:UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.backgroundColor = .green
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "TodoCell")
+        return tableView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.addSubview(titleLabel)
+        view.addSubview(lineUIView)
+        view.addSubview(todoTableView)
+        view.addSubview(addTodoButton)
+        
+        NSLayoutConstraint.activate([
+            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant:  20),
+            titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            titleLabel.heightAnchor.constraint(equalToConstant: 50),
+            
+            lineUIView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 12),
+            lineUIView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            lineUIView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            lineUIView.heightAnchor.constraint(equalToConstant:1),
+            
+            todoTableView.centerXAnchor.constraint(equalTo: titleLabel.centerXAnchor),
+            todoTableView.topAnchor.constraint(equalTo:titleLabel.bottomAnchor, constant: 20),
+            todoTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            todoTableView.heightAnchor.constraint(equalToConstant: 500),
+            
+            addTodoButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            addTodoButton.topAnchor.constraint(equalTo: todoTableView.bottomAnchor, constant: 40),
+            addTodoButton.heightAnchor.constraint(equalToConstant: 50),
+            addTodoButton.widthAnchor.constraint(equalToConstant: 100)
+        ])
     }
     
+    
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return todos.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TodoCell", for: indexPath)
+        cell.textLabel?.text = todos[indexPath.row]
+        return cell
+    }
+}
+
+#Preview
+{
+    TodoListViewController()
 }
