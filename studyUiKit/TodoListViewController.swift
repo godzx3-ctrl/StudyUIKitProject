@@ -24,19 +24,23 @@ class TodoListViewController : UIViewController, UITableViewDataSource, UITableV
         let label = UILabel()
         label.text = "할 일 목 록"
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 30, weight: .bold)
         label.textAlignment = .center
         return label
     }()
     
-    let addTodoButton:UIButton = {
+       let addTodoButton:UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("할 일 추가", for: .normal)
+        button.setTitle("새 할 일 추가", for: .normal)
         button.backgroundColor = .systemBlue
         button.titleLabel?.textColor = .white
         button.clipsToBounds = true
         button.layer.cornerRadius = 20
+//        button.addAction(UIAction { [weak self] _ in
+//            self?.addTodoAction()
+//        },
+//        for: .touchUpInside)
         return button
     }()
     
@@ -45,13 +49,15 @@ class TodoListViewController : UIViewController, UITableViewDataSource, UITableV
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.backgroundColor = .green
+        tableView.backgroundColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "TodoCell")
         return tableView
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        addTodoButton.addAction(UIAction { [weak self] _ in self?.addTodoAction() }, for: .touchUpInside)
         
         view.addSubview(titleLabel)
         view.addSubview(lineUIView)
@@ -91,6 +97,11 @@ class TodoListViewController : UIViewController, UITableViewDataSource, UITableV
         let cell = tableView.dequeueReusableCell(withIdentifier: "TodoCell", for: indexPath)
         cell.textLabel?.text = todos[indexPath.row]
         return cell
+    }
+    
+    
+    private func addTodoAction(){
+        
     }
 }
 
