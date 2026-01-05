@@ -40,11 +40,11 @@ class AddToDoViewController: UIViewController{
         
         NSLayoutConstraint.activate([
             addTodoTextField.centerXAnchor.constraint(equalTo:view.centerXAnchor),
-            addTodoTextField.topAnchor.constraint(equalTo:view.safeAreaLayoutGuide.topAnchor, constant: 150),
+            addTodoTextField.topAnchor.constraint(equalTo:view.safeAreaLayoutGuide.topAnchor, constant: 50),
             addTodoTextField.leadingAnchor.constraint(equalTo:view.leadingAnchor, constant:20),
             
             addButton.centerXAnchor.constraint(equalTo: addTodoTextField.centerXAnchor),
-            addButton.topAnchor.constraint(equalTo: addTodoTextField.bottomAnchor,constant: 100),
+            addButton.topAnchor.constraint(equalTo: addTodoTextField.bottomAnchor,constant: 50),
             addButton.widthAnchor.constraint(equalToConstant: 200),
         ])
     }

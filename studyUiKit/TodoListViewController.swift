@@ -101,6 +101,20 @@ class TodoListViewController : UIViewController, UITableViewDataSource, UITableV
     
     
     private func addTodoAction(){
+        let addTodoVC = AddToDoViewController()
+        addTodoVC.modalPresentationStyle = .pageSheet
+        
+        if let sheet = addTodoVC.sheetPresentationController {
+            sheet.detents = [
+                .custom{ _ in
+                    return 200
+                }
+            ]
+            sheet.prefersGrabberVisible = true
+            sheet.preferredCornerRadius = 16
+        }
+        
+        present(addTodoVC, animated: true)
         
     }
 }
